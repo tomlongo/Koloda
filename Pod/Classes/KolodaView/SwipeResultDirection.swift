@@ -55,15 +55,15 @@ extension SwipeResultDirection {
 private enum VerticalPosition: CGFloat {
     
     case top = -1
-    case middle = 0
+    case middle = 0.5
     case bottom = 1
 }
 
 private enum HorizontalPosition: CGFloat {
     
-    case left = -1
-    case middle = 0
-    case right = 1
+    case left = -1.5
+    case middle = 0.5
+    case right = 1.5
 }
 
 
@@ -149,7 +149,7 @@ extension CGPoint {
     
     func screenPointForSize(_ screenSize: CGSize) -> CGPoint {
         let x = self.x * screenSize.width // 0.5 * (1 + self.x) * screenSize.width
-        let y = 0.5 * (1 + self.y) * screenSize.height
+        let y = self.y * screenSize.height //0.5 * (1 + self.y) * screenSize.height
         return CGPoint(x: x, y: y)
     }
     
