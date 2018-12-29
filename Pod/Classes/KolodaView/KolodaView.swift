@@ -64,6 +64,7 @@ public protocol KolodaViewDelegate: class {
     func koloda(_ koloda: KolodaView, shouldDragCardAt index: Int ) -> Bool
     func kolodaPanBegan(_ koloda: KolodaView, card: DraggableCardView)
     func kolodaPanFinished(_ koloda: KolodaView, card: DraggableCardView)
+    func kolodaSwipeAnimationFinished(_ koloda: KolodaView, card: DraggableCardView)
     
 }
 
@@ -84,6 +85,7 @@ public extension KolodaViewDelegate {
     func koloda(_ koloda: KolodaView, shouldDragCardAt index: Int ) -> Bool { return true }
     func kolodaPanBegan(_ koloda: KolodaView, card: DraggableCardView) {}
     func kolodaPanFinished(_ koloda: KolodaView, card: DraggableCardView) {}
+    func kolodaSwipeAnimationFinished(_ koloda: KolodaView, card: DraggableCardView) {}
 }
 
 open class KolodaView: UIView, DraggableCardDelegate {
@@ -385,6 +387,10 @@ open class KolodaView: UIView, DraggableCardDelegate {
 
     func card(cardPanFinished card: DraggableCardView) {
         delegate?.kolodaPanFinished(self, card: card)
+    }
+    
+    func card(cardSwipeAnimationFinished card: DraggableCardView) {
+        delegate?.kolodaSwipeAnimationFinished(self, card: card)
     }
 
     // MARK: Private

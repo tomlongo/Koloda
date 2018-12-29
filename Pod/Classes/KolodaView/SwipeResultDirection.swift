@@ -148,7 +148,7 @@ extension CGPoint {
     }
     
     func screenPointForSize(_ screenSize: CGSize) -> CGPoint {
-        let x = 0.5 * (1 + self.x) * screenSize.width
+        let x = self.x * screenSize.width // 0.5 * (1 + self.x) * screenSize.width
         let y = 0.5 * (1 + self.y) * screenSize.height
         return CGPoint(x: x, y: y)
     }

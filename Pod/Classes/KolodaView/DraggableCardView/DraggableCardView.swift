@@ -10,10 +10,10 @@ import UIKit
 import pop
 
 public enum DragSpeed: TimeInterval {
-    case slow = 2.0
-    case moderate = 1.5
-    case `default` = 0.8
-    case fast = 0.4
+    case slow = 1.0
+    case moderate = 0.7
+    case `default` = 0.4
+    case fast = 0.2
 }
 
 protocol DraggableCardDelegate: class {
@@ -29,6 +29,7 @@ protocol DraggableCardDelegate: class {
     func card(cardSwipeSpeed card: DraggableCardView) -> DragSpeed
     func card(cardPanBegan card: DraggableCardView)
     func card(cardPanFinished card: DraggableCardView)
+    func card(cardSwipeAnimationFinished card: DraggableCardView)
 }
 
 //Drag animation constants
@@ -350,7 +351,7 @@ public class DraggableCardView: UIView, UIGestureRecognizerDelegate {
     
     func animationPointForDirection(_ direction: SwipeResultDirection) -> CGPoint {
         let point = direction.point
-        let animatePoint = CGPoint(x: point.x * 4, y: point.y * 4) //should be 2
+        let animatePoint = point //CGPoint(x: point.x * 4, y: point.y * 4) //should be 2
         let retPoint = animatePoint.screenPointForSize(screenSize)
         return retPoint
     }
@@ -364,10 +365,12 @@ public class DraggableCardView: UIView, UIGestureRecognizerDelegate {
         overlayView?.alpha = 1.0
         delegate?.card(self, wasSwipedIn: direction)
         let translationAnimation = POPBasicAnimation(propertyNamed: kPOPLayerTranslationXY)
+        translationAnimation?.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
         translationAnimation?.duration = cardSwipeActionAnimationDuration
         translationAnimation?.fromValue = NSValue(cgPoint: POPLayerGetTranslationXY(layer))
         translationAnimation?.toValue = NSValue(cgPoint: animationPointForDirection(direction))
         translationAnimation?.completionBlock = { _, _ in
+            self.delegate?.card(cardSwipeAnimationFinished: self)
             self.removeFromSuperview()
         }
         layer.pop_add(translationAnimation, forKey: "swipeTranslationAnimation")

@@ -70,6 +70,10 @@ extension BackgroundAnimationViewController: KolodaViewDelegate {
         return true
     }
     
+    func kolodaSwipeAnimationFinished(_ koloda: KolodaView, card: DraggableCardView) {
+        print("ANIMATON DONE")
+    }
+    
     func koloda(kolodaBackgroundCardAnimation koloda: KolodaView) -> POPPropertyAnimation? {
         let animation = POPSpringAnimation(propertyNamed: kPOPViewFrame)
         animation?.springBounciness = frameAnimationSpringBounciness
@@ -82,7 +86,7 @@ extension BackgroundAnimationViewController: KolodaViewDelegate {
 extension BackgroundAnimationViewController: KolodaViewDataSource {
     
     func kolodaSpeedThatCardShouldDrag(_ koloda: KolodaView) -> DragSpeed {
-        return .default
+        return .fast
     }
     
     func kolodaNumberOfCards(_ koloda: KolodaView) -> Int {
