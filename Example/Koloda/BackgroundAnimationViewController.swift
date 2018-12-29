@@ -70,6 +70,10 @@ extension BackgroundAnimationViewController: KolodaViewDelegate {
         return true
     }
     
+    func kolodaSwipeThresholdRatioMargin(_ koloda: KolodaView) -> CGFloat? {
+        return 0.4
+    }
+    
     func koloda(kolodaBackgroundCardAnimation koloda: KolodaView) -> POPPropertyAnimation? {
         let animation = POPSpringAnimation(propertyNamed: kPOPViewFrame)
         animation?.springBounciness = frameAnimationSpringBounciness
